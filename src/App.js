@@ -1,8 +1,10 @@
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
-
 import Header from "./components/header";
 import Home from "./components/home";
+import CalendarPage from "./components/calendar"; // Import the new calendar page
+import AnnouncementBoard from "./components/announcementboard";
+
 
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -25,7 +27,16 @@ function App() {
       path: "/home",
       element: <Home />,
     },
+    {
+      path: "/calendar",
+      element: <CalendarPage />
+    },
+    {
+      path: "/announcements", 
+      element: <AnnouncementBoard />
+    }
   ];
+  
   let routesElement = useRoutes(routesArray);
   return (
     <AuthProvider>
@@ -36,3 +47,4 @@ function App() {
 }
 
 export default App;
+
