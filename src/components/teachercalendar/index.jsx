@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, onSnapshot, query, where, getDocs } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, where, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-const CalendarPage = () => {
+const TeacherCalendar = () => {
   const today = new Date();
   const db = getFirestore();
   const auth = getAuth();
+  const navigate = useNavigate();
+
   const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [events, setEvents] = useState([]);
   const [userSchool, setUserSchool] = useState('');
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [showEventDetails, setShowEventDetails] = useState(false);
 
-  // Fetch the parent's school from Firestore
+  // Fetch the teacher's school from Firestore
   useEffect(() => {
     const fetchUserSchool = async () => {
       if (!auth.currentUser) return;
@@ -28,7 +31,7 @@ const CalendarPage = () => {
     fetchUserSchool();
   }, [auth.currentUser]);
 
-  // Fetch events ONLY for the parent's school
+  // Fetch events for the teacher's school
   useEffect(() => {
     if (!userSchool) return;
 
@@ -44,6 +47,24 @@ const CalendarPage = () => {
 
     return () => unsubscribe();
   }, [db, userSchool]);
+
+  // Function to delete an event
+  const handleDeleteEvent = async (id, createdBy) => {
+    if (auth.currentUser?.email !== createdBy) {
+      alert('You can only delete your own events!');
+      return;
+    }
+
+    const confirmDelete = window.confirm('Are you sure you want to delete this event?');
+    if (!confirmDelete) return;
+
+    try {
+      await deleteDoc(doc(db, 'calendarEvents', id));
+      setShowEventDetails(false);
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  };
 
   return (
     <div className="p-6 mt-12">
@@ -73,4 +94,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default TeacherCalendar;
