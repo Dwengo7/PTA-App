@@ -19,28 +19,38 @@ const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsSigningIn(true);
-
+    
         try {
-            // Sign in with Firebase Auth
             const userCredential = await doSignInWithEmailAndPassword(email, password);
             const uid = userCredential.user.uid;
-
+    
             console.log("User logged in, fetching role...");
-
-            // Fetch role from Firestore
+    
             const userDoc = await getDoc(doc(db, 'users', uid));
             if (userDoc.exists()) {
                 const userData = userDoc.data();
-                setRole(userData.role); // Save role to state
-                console.log(`User role: ${userData.role}`);
+    
+                if (userData.requestedSchool === null) {
+                    console.log("User has been denied access. Redirecting...");
+                    navigate('/schoolselection');
+                    return;
+                }
 
-                // Redirect based on role
+                // ✅ Check for approval status
+                if (userData.isApproved === false) {
+                    console.log("User is pending approval. Redirecting...");
+                    navigate('/pendingapproval');
+                    return;
+                }
+    
+                setRole(userData.role);
+    
                 if (userData.role === 'teacher') {
                     console.log("Redirecting to Teacher Home Page...");
-                    navigate('/teacherhome'); // ✅ Teacher redirect
+                    navigate('/teacherhome');
                 } else {
                     console.log("Redirecting to Parent Home Page...");
-                    navigate('/home'); // ✅ Parent redirect
+                    navigate('/home');
                 }
             } else {
                 setErrorMessage('User data not found.');
@@ -52,6 +62,7 @@ const Login = () => {
             setIsSigningIn(false);
         }
     };
+    
 
     // Prevent incorrect redirects until role is determined
     useEffect(() => {

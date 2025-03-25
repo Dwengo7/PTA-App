@@ -17,34 +17,39 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (password !== confirmPassword) {
-            setErrorMessage('Passwords do not match');
-            return;
-        }
+    if (password !== confirmPassword) {
+        setErrorMessage('Passwords do not match');
+        return;
+    }
 
-        setIsRegistering(true);
-        try {
-            const userCredential = await doCreateUserWithEmailAndPassword(email, password);
-            const uid = userCredential.user.uid;
+    setIsRegistering(true);
+    try {
+        const userCredential = await doCreateUserWithEmailAndPassword(email, password);
+        const uid = userCredential.user.uid;
 
-            // Store user info (but school will be set later)
-            await setDoc(doc(db, 'users', uid), {
-                email,
-                role: userType, // 'teacher' or 'parent'
-                school: "", // School will be set in the next step
-                createdAt: new Date()
-            });
+        // ✅ Convert email to lowercase before storing
+        const lowercaseEmail = email.toLowerCase();
 
-            // Redirect to school selection instead of home
-            navigate('/schoolselection');
-        } catch (error) {
-            console.error("Error during registration:", error);
-            setErrorMessage(error.message);
-        }
-        setIsRegistering(false);
-    };
+        await setDoc(doc(db, 'users', uid), {
+            email: lowercaseEmail,
+            role: userType, // 'teacher' or 'parent'
+            requestedSchool: "", // School will be set in the next step
+            school: "",
+            isApproved: false,
+            createdAt: new Date()
+        });
+
+        // Redirect to school selection instead of home
+        navigate('/schoolselection');
+    } catch (error) {
+        console.error("Error during registration:", error);
+        setErrorMessage(error.message);
+    }
+    setIsRegistering(false);
+};
+
 
     return (
         <div>

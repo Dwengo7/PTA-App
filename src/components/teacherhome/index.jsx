@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, Users, MessageSquare, FileText } from "lucide-react";
+import { Calendar, Users, MessageSquare, FileText, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const TeacherHome = () => {
@@ -60,6 +60,19 @@ const TeacherHome = () => {
             className="mt-2 px-4 py-2 bg-orange-500 text-white rounded"
           >
             Upload Newsletter
+          </button>
+        </div>
+
+        {/* Review Pending Approvals */}
+        <div className="border p-4 rounded-lg shadow-md">
+          <CheckCircle className="w-6 h-6 text-teal-500" />
+          <h2 className="text-lg font-semibold">Review Pending Approvals</h2>
+          <p className="text-gray-500">Approve or reject users requesting to join your school.</p>
+          <button
+            onClick={() => navigate('/teacherapproval')}
+            className="mt-2 px-4 py-2 bg-teal-500 text-white rounded"
+          >
+            View Approvals
           </button>
         </div>
       </div>

@@ -11,6 +11,8 @@ import TeacherCalendar from "./components/teachercalendar";
 import UploadNewsletter from "./components/newsletter";
 import ParentNewsletters from "./components/parentnewsletter";
 import SchoolSelection from "./components/schoolselection";
+import PendingApproval from "./components/pendingapproval";
+import TeacherApproval from "./components/teacherapproval";
 
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -28,6 +30,8 @@ function App() {
     { path: "/uploadnewsletter", element: <UploadNewsletter /> },
     { path: "/parentnewsletters", element: <ParentNewsletters /> },
     { path: "/schoolselection", element: <SchoolSelection /> },
+    { path: "/pendingapproval", element: <PendingApproval /> },
+    { path: "/teacherapproval", element: <TeacherApproval /> },
 
     { path: "*", element: <Navigate to="/login" replace /> }, // Redirect unknown routes to login
   ];
@@ -42,5 +46,3 @@ function App() {
 }
 
 export default App;
-
-

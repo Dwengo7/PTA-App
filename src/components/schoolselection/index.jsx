@@ -26,37 +26,52 @@ const SchoolSelection = () => {
   // Handle school selection or creation
   const handleSelectSchool = async (e) => {
     e.preventDefault();
-
+  
     if (!selectedSchool && !newSchool) {
       alert('Please select or enter a school name.');
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       let schoolName = selectedSchool || newSchool;
-
+      const isNewSchool = Boolean(newSchool);
+  
       // If a new school is being created, add it to Firestore
-      if (newSchool) {
+      if (isNewSchool) {
         const existingSchool = schools.find((school) => school.toLowerCase() === newSchool.toLowerCase());
-
+  
         if (!existingSchool) {
           await addDoc(collection(db, 'schools'), { name: newSchool });
+  
+          // Assign school directly to user
+          const userDocRef = doc(db, 'users', currentUser.uid);
+          await updateDoc(userDocRef, {
+            school: newSchool,
+            requestedSchool: '',
+            isApproved: true,
+          });
+  
+          navigate('/home');
+          return;
         }
       }
-
-      // Update user’s Firestore profile with the selected school
+  
+      // If it's an existing school, request to join instead
       const userDocRef = doc(db, 'users', currentUser.uid);
-      await updateDoc(userDocRef, { school: schoolName });
-
-      // Navigate to homepage
-      navigate('/home');
+      await updateDoc(userDocRef, {
+        school: '',
+        requestedSchool: schoolName,
+        isApproved: false,
+      });
+  
+      navigate('/pendingapproval');
     } catch (error) {
       console.error('Error selecting school:', error);
       alert('Failed to update school. Please try again.');
     }
-
+  
     setLoading(false);
   };
 

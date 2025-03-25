@@ -9,13 +9,26 @@ const Header = () => {
   const { userLoggedIn } = useAuth();
 
   // Determine if we should show the Back to Home button
-  const showBackToHome = location.pathname === '/calendar';
+  const showBackToHome = ['/calendar', '/parentnewsletters', '/announcements'].includes(location.pathname);
+
+  const showBackToTeacherHome = ['/teachercalendar', '/teacherannouncements', '/uploadnewsletter', '/teacherapproval'].includes(location.pathname);
+
+  
 
   return (
     <nav className="flex flex-row gap-x-2 w-full z-20 fixed top-0 left-0 h-12 border-b place-content-center items-center bg-gray-200">
       {showBackToHome && (
         <button
           onClick={() => navigate('/home')}
+          className="text-sm text-blue-600 underline"
+        >
+          Back to Home
+        </button>
+      )}
+
+      {showBackToTeacherHome && (
+        <button
+          onClick={() => navigate('/teacherhome')}
           className="text-sm text-blue-600 underline"
         >
           Back to Home
