@@ -33,7 +33,7 @@ const TeacherApprovalPage = () => {
     };
 
     fetchTeacherSchool();
-  }, []);
+  }, );
 
   // Fetch users requesting access to this school
   useEffect(() => {

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, where, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const TeacherAnnouncementBoard = () => {
-  const navigate = useNavigate();
   const db = getFirestore();
   const auth = getAuth();
 
@@ -13,7 +11,7 @@ const TeacherAnnouncementBoard = () => {
   const [content, setContent] = useState('');
   const [mode, setMode] = useState('announcement'); // Default: Announcement
   const [announcements, setAnnouncements] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [setEvents] = useState([]);
   const [userSchool, setUserSchool] = useState('');
 
   // Fetch teacher's school from Firestore
@@ -30,7 +28,7 @@ const TeacherAnnouncementBoard = () => {
     };
 
     fetchUserSchool();
-  }, [auth.currentUser]);
+  }, );
 
   // Fetch announcements & events only for the teacher's school
   useEffect(() => {
@@ -51,7 +49,7 @@ const TeacherAnnouncementBoard = () => {
       unsubscribeAnnouncements();
       unsubscribeEvents();
     };
-  }, [db, userSchool]);
+  }, );
 
   // Function to add an announcement or event
   const handleAddItem = async (e) => {

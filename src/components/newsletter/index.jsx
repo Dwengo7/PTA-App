@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 
 const UploadNewsletter = () => {
   const db = getFirestore();
   const auth = getAuth();
-  const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [fileLink, setFileLink] = useState('');
