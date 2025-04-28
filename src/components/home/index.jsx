@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, Users, MessageSquare, FileText } from "lucide-react";
+import { Calendar, Users, MessageSquare, FileText, Mail } from "lucide-react"; // ✨ Import the Mail icon
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -29,7 +29,10 @@ const Home = () => {
           <Users className="w-6 h-6 text-green-500" />
           <h2 className="text-lg font-semibold">Parents & Teachers</h2>
           <p className="text-gray-500">Connect with members of the PTA community.</p>
-          <button className="mt-2 px-4 py-2 bg-green-500 text-white rounded">
+          <button 
+            onClick={() => navigate('/parentteacherdirectory')}
+            className="mt-2 px-4 py-2 bg-green-500 text-white rounded"
+          >
             View Directory
           </button>
         </div>
@@ -59,10 +62,25 @@ const Home = () => {
             View Newsletters
           </button>
         </div>
+
+        {/* ✨ New: Parent Messages */}
+        <div className="border p-4 rounded-lg shadow-md">
+          <Mail className="w-6 h-6 text-indigo-500" />
+          <h2 className="text-lg font-semibold">Messages</h2>
+          <p className="text-gray-500">View and respond to messages from teachers.</p>
+          <button
+            onClick={() => navigate('/parentmessages')}
+            className="mt-2 px-4 py-2 bg-indigo-500 text-white rounded"
+          >
+            View Messages
+          </button>
+        </div>
+
       </div>
     </div>
   );
 };
 
 export default Home;
+
 

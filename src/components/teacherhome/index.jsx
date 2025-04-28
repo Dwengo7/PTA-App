@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, Users, MessageSquare, FileText, CheckCircle } from "lucide-react";
+import { Calendar, Users, MessageSquare, FileText, CheckCircle, Book, Send } from "lucide-react"; // ⬅️ Added Send icon!
 import { useNavigate } from "react-router-dom";
 
 const TeacherHome = () => {
@@ -75,6 +75,46 @@ const TeacherHome = () => {
             View Approvals
           </button>
         </div>
+
+        {/* View / Create Classes */}
+        <div className="border p-4 rounded-lg shadow-md">
+          <Book className="w-6 h-6 text-pink-500" />
+          <h2 className="text-lg font-semibold">View / Create Classes</h2>
+          <p className="text-gray-500">Manage the classes you teach and create new ones.</p>
+          <button
+            onClick={() => navigate('/teacherclasses')}
+            className="mt-2 px-4 py-2 bg-pink-500 text-white rounded"
+          >
+            Manage Classes
+          </button>
+        </div>
+
+        {/* Manage Students */}
+        <div className="border p-4 rounded-lg shadow-md">
+          <Book className="w-6 h-6 text-red-500" />
+          <h2 className="text-lg font-semibold">Manage Students</h2>
+          <p className="text-gray-500">Manage the students in the relevant school.</p>
+          <button
+            onClick={() => navigate('/managestudents')}
+            className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
+          >
+            View Students
+          </button>
+        </div>
+
+        {/* ✨ New: Message Parents */}
+        <div className="border p-4 rounded-lg shadow-md">
+          <Send className="w-6 h-6 text-indigo-500" />
+          <h2 className="text-lg font-semibold">Message Parents</h2>
+          <p className="text-gray-500">Send important messages directly to parents.</p>
+          <button
+            onClick={() => navigate('/teachermessageparents')}
+            className="mt-2 px-4 py-2 bg-indigo-500 text-white rounded"
+          >
+            Send Message
+          </button>
+        </div>
+
       </div>
     </div>
   );

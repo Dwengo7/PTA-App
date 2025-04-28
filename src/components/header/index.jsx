@@ -9,9 +9,9 @@ const Header = () => {
   const { userLoggedIn } = useAuth();
 
   // Determine if we should show the Back to Home button
-  const showBackToHome = ['/calendar', '/parentnewsletters', '/announcements'].includes(location.pathname);
+  const showBackToHome = ['/calendar', '/parentnewsletters', '/announcements', '/parentteacherdirectory'].includes(location.pathname);
 
-  const showBackToTeacherHome = ['/teachercalendar', '/teacherannouncements', '/uploadnewsletter', '/teacherapproval'].includes(location.pathname);
+  const showBackToTeacherHome = ['/teachercalendar', '/teacherannouncements', '/uploadnewsletter', '/teacherapproval', '/teacherclasses','/managestudents', '/teacherdirectory', '/teachermessageparents'].includes(location.pathname);
 
   
 

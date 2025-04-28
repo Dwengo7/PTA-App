@@ -13,6 +13,12 @@ import ParentNewsletters from "./components/parentnewsletter";
 import SchoolSelection from "./components/schoolselection";
 import PendingApproval from "./components/pendingapproval";
 import TeacherApproval from "./components/teacherapproval";
+import TeacherDirectory from "./components/teacherdirectory";
+import TeacherClasses from "./components/teacherclasses";
+import ManageStudents from "./components/managestudent";
+import ParentTeacherDirectory from "./components/parentteacherdirectory"; 
+import TeacherMessageParents from "./components/teachermessageparents";
+import ParentMessages from "./components/parentmessages";
 
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -32,6 +38,12 @@ function App() {
     { path: "/schoolselection", element: <SchoolSelection /> },
     { path: "/pendingapproval", element: <PendingApproval /> },
     { path: "/teacherapproval", element: <TeacherApproval /> },
+    { path: "/teacherdirectory", element: <TeacherDirectory /> },
+    { path: "/teacherclasses", element: <TeacherClasses /> },
+    { path : "/managestudents", element: <ManageStudents /> },
+    { path: "/parentteacherdirectory", element: <ParentTeacherDirectory /> }, // Assuming this is a duplicate of the teacher directory
+    { path : "/teachermessageparents", element: <TeacherMessageParents /> },
+    { path : "/parentmessages", element: <ParentMessages /> },
 
     { path: "*", element: <Navigate to="/login" replace /> }, // Redirect unknown routes to login
   ];

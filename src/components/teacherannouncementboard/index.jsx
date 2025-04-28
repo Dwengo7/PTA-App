@@ -69,7 +69,9 @@ const TeacherAnnouncementBoard = () => {
         school: userSchool,
         createdBy: auth.currentUser?.email || 'Unknown Teacher',
         createdAt: new Date(),
+        type: mode, // 🔥 New line here
       });
+      
 
       // Clear form fields after submission
       setTitle('');
