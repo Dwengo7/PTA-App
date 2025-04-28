@@ -17,32 +17,31 @@ jest.mock('firebase/firestore', () => ({
 }))
 
 // mock useNavigate
-const mockNavigate = jest.fn();
+const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => {
-  const actual = jest.requireActual('react-router-dom');
+  const actual = jest.requireActual('react-router-dom')
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-  };
-});
+  }
+})
+
+// Silence console.error during tests to prevent noise
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
+})
+
+afterAll(() => {
+  console.error.mockRestore()
+})
 
 // —————————————— tests ——————————————
 describe('Login page', () => {
-  // Silence expected console.error from our catch() so it
-  // doesn’t fail the test suite
-  beforeAll(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
-  })
-  afterAll(() => {
-    console.error.mockRestore()
-  })
-
   beforeEach(() => {
     jest.clearAllMocks()
-    // pretend user is not already logged in
     useAuth.mockReturnValue({ userLoggedIn: false })
-    getFirestore.mockReturnValue({})   // db instance, not used in test
-    doc.mockReturnValue({})            // doc ref, not used in test
+    getFirestore.mockReturnValue({})
+    doc.mockReturnValue({})
   })
 
   it('renders email/password inputs and sign-in button', () => {
@@ -124,9 +123,7 @@ describe('Login page', () => {
     doSignInWithEmailAndPassword.mockResolvedValue({ user: { uid: 'u3' } })
     getDoc.mockResolvedValue({
       exists: () => true,
-      data: () => ({
-        requestedSchool: null,
-      }),
+      data: () => ({ requestedSchool: null }),
     })
 
     render(
@@ -196,6 +193,3 @@ describe('Login page', () => {
     expect(await screen.findByText(/invalid credentials/i)).toBeInTheDocument()
   })
 })
-
-
-

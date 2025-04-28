@@ -30,7 +30,7 @@ const TeacherMessageParents = () => {
     };
 
     fetchTeacherSchool();
-  }, []);
+  }, );
 
   // Fetch the parents from the same school
   useEffect(() => {

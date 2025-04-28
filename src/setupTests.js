@@ -8,6 +8,8 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 global.ReadableStream = require('stream/web').ReadableStream;
 
+
+
 const customRender = (ui, options) =>
   render(<BrowserRouter>{ui}</BrowserRouter>, options);
 
