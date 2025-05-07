@@ -96,7 +96,7 @@ const TeacherClasses = () => {
   };
 
   // Add Student to Class
-  const handleAddStudent = async (e) => {
+  const handleAddStudentToClass = async (e) => {
     e.preventDefault();
     if (!selectedClassId || !selectedStudentUID) return alert('Select a class and a student.');
 
@@ -169,7 +169,7 @@ const TeacherClasses = () => {
       </form>
 
       {/* Add Student */}
-      <form onSubmit={handleAddStudent} className="space-y-4 mb-10">
+      <form onSubmit={handleAddStudentToClass} className="space-y-4 mb-10">
         <h2 className="text-xl font-semibold">Add Student to a Class</h2>
         <select
           value={selectedClassId}
