@@ -64,7 +64,7 @@ const TeacherClasses = () => {
     };
 
     fetchTeacherData();
-  }, []);
+  }, );
 
   // Create Class
   const handleCreateClass = async (e) => {
