@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../../contexts/authContext';
 
 import { useNavigate } from 'react-router-dom';
@@ -41,22 +41,36 @@ const SchoolSelection = () => {
       // If a new school is being created, add it to Firestore
       if (isNewSchool) {
         const existingSchool = schools.find((school) => school.toLowerCase() === newSchool.toLowerCase());
-  
+      
         if (!existingSchool) {
           await addDoc(collection(db, 'schools'), { name: newSchool });
-  
-          // Assign school directly to user
+      
           const userDocRef = doc(db, 'users', currentUser.uid);
+      
+          // Assign school directly to user
           await updateDoc(userDocRef, {
             school: newSchool,
             requestedSchool: '',
             isApproved: true,
           });
-  
-          navigate('/home');
+      
+          // 🔍 Fetch the user document again to check the role
+          const updatedUserDoc = await getDoc(userDocRef);
+          if (updatedUserDoc.exists()) {
+            const userData = updatedUserDoc.data();
+            if (userData.role === 'teacher') {
+              navigate('/teacherhome');
+            } else {
+              navigate('/home');
+            }
+          } else {
+            alert('User data not found.');
+          }
+      
           return;
         }
       }
+      
   
       // If it's an existing school, request to join instead
       const userDocRef = doc(db, 'users', currentUser.uid);
